@@ -1,12 +1,29 @@
 import timeit
+import requests
 
 # Завантаження текстових файлів
-with open('https://drive.google.com/file/d/18_R5vEQ3eDuy2VdV3K5Lu-R-B-adxXZh/view?usp=sharing', 'r') as file:
+url1 = 'https://drive.google.com/file/d/18_R5vEQ3eDuy2VdV3K5Lu-R-B-adxXZh/view?usp=sharing'
+response = requests.get(url1)
+
+if response.status_code == 200:
+    content1 = response.content  # отримуємо вміст файлу
+else:
+    print("Помилка завантаження файлу:", response.status_code)
+
+url2 = 'https://drive.google.com/file/d/13hSt4JkJc11nckZZz2yoFHYL89a4XkMZ/view?usp=sharing'
+response = requests.get(url2)
+
+if response.status_code == 200:
+    content2 = response.content  # отримуємо вміст файлу
+else:
+    print("Помилка завантаження файлу:", response.status_code)
+
+""" with open('https://drive.google.com/file/d/18_R5vEQ3eDuy2VdV3K5Lu-R-B-adxXZh/view?usp=sharing', 'r') as file:
     text1 = file.read()
 
 with open('https://drive.google.com/file/d/13hSt4JkJc11nckZZz2yoFHYL89a4XkMZ/view?usp=sharing', 'r') as file:
     text2 = file.read()
-
+ """
 # Функція для пошуку підрядка за допомогою алгоритму Боєра-Мура
 def build_shift_table(pattern):
     """Створити таблицю зсувів для алгоритму Боєра-Мура."""
@@ -164,7 +181,22 @@ def measure_time_for_fake_pattern(algorithm, text):
     return timeit.timeit(lambda: algorithm(text, pattern), number=1)
 
 # Пошук підрядка, який існує в тексті, та вимірювання часу виконання
+pattern1 = "дві монети по 10 копійок." # паттерн для першого текста
+pattern2 = "Розгорнутий зв’язний список (unrolled list)" # паттерн для другого текста
+
 print("Для тексту 1:")
-print("Боєра-Мура:", measure_time_for_one_pattern(boyer_moore, text1, pattern))
-print("Кнута-Морріса-Пратта:", measure_time_for_one_pattern(kmp, text1, pattern))
-print("Рабі
+print("Боєра-Мура:", measure_time_for_one_pattern(boyer_moore_search, content1, pattern1))
+print("Кнута-Морріса-Пратта:", measure_time_for_one_pattern(kmp_search, content1, pattern1))
+print("Рабіна-Карпа:", measure_time_for_one_pattern(rabin_karp_search, content1, pattern1))
+
+print("\nДля тексту 2:")
+print("Боєра-Мура:", measure_time_for_one_pattern(boyer_moore_search, content2, pattern2))
+print("Кнута-Морріса-Пратта:", measure_time_for_one_pattern(kmp_search, content2, pattern2))
+print("Рабіна-Карпа:", measure_time_for_one_pattern(rabin_karp_search, content2, pattern2))
+
+# Пошук вигаданого підрядка та вимірювання часу виконання
+print("\nДля вигаданого підрядка:")
+print("Боєра-Мура:", measure_time_for_fake_pattern(boyer_moore_search, content2))
+print("Кнута-Морріса-Пратта:", measure_time_for_fake_pattern(kmp_search, content2))
+print("Рабіна-Карпа:", measure_time_for_fake_pattern(rabin_karp_search, content2))
+

@@ -37,7 +37,7 @@ def binary_search(arr, x):
     return (element_found, iterations, nearest_element_index, nearest_element)
 
 arr = [0.2, 0.3, 0.4, 1.0, 4.0]
-x = 0.35
+x = 0.3
 element_found, iterations, mid, element = binary_search(arr, x)
 if element_found:
     print(f"Element {element} is present at index {mid} , number of iterations was {iterations}")
