@@ -3,6 +3,7 @@ def binary_search(arr, x):
     high = len(arr) - 1
     mid = 0
     iterations = 0
+    element_found = False
  
     while low <= high:
  
@@ -19,15 +20,27 @@ def binary_search(arr, x):
  
         # інакше x присутній на позиції і повертаємо його
         else:
-            return (iterations, mid)
+            element_found = True
+            return (element_found, iterations, mid, arr[mid])
  
     # якщо елемент не знайдений
-    return -1
+    if (arr[mid] - arr[mid-1]) > (arr[mid+1] - arr[mid]):
+        nearest_element = arr[mid+1]
+        nearest_element_index = mid+1
+    elif (arr[mid] - arr[mid-1]) < (arr[mid+1] - arr[mid]):
+        nearest_element = arr[mid-1]
+        nearest_element_index = mid-1
+    else:
+        nearest_element = (arr[mid-1], arr[mid+1])
+        nearest_element_index = (mid-1, mid+1) 
+
+    return (element_found, iterations, nearest_element_index, nearest_element)
 
 arr = [0.2, 0.3, 0.4, 1.0, 4.0]
-x = 1.0
-iterations, mid = binary_search(arr, x)
-if iterations != -1:
-    print(f"Element is present at index {mid} , number of iterations was {iterations}")
+x = 0.35
+element_found, iterations, mid, element = binary_search(arr, x)
+if element_found:
+    print(f"Element {element} is present at index {mid} , number of iterations was {iterations}")
 else:
-    print("Element is not present in array")
+    print(f"Element is not present in array, nearest element index is {mid}, value is {element}, number of iterations was {iterations}")
+
