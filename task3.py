@@ -6,7 +6,7 @@ url1 = 'https://drive.google.com/file/d/18_R5vEQ3eDuy2VdV3K5Lu-R-B-adxXZh/view?u
 response = requests.get(url1)
 
 if response.status_code == 200:
-    content1 = response.content  # отримуємо вміст файлу
+    content1 = response.content.decode('utf-8')  # отримуємо вміст файлу
 else:
     print("Помилка завантаження файлу:", response.status_code)
 
@@ -14,7 +14,7 @@ url2 = 'https://drive.google.com/file/d/13hSt4JkJc11nckZZz2yoFHYL89a4XkMZ/view?u
 response = requests.get(url2)
 
 if response.status_code == 200:
-    content2 = response.content  # отримуємо вміст файлу
+    content2 = response.content.decode('utf-8')  # отримуємо вміст файлу
 else:
     print("Помилка завантаження файлу:", response.status_code)
 
@@ -173,12 +173,12 @@ else:
 
 # Функція для вимірювання часу виконання алгоритму для одного підрядка
 def measure_time_for_one_pattern(algorithm, text, pattern):
-    return timeit.timeit(lambda: algorithm(text, pattern), number=1)
+    return timeit.timeit(lambda: algorithm(text, pattern), number=10)
 
 # Функція для вимірювання часу виконання алгоритму для вигаданого підрядка
 def measure_time_for_fake_pattern(algorithm, text):
     pattern = "вигаданий_підрядок"  # ваш вигаданий підрядок
-    return timeit.timeit(lambda: algorithm(text, pattern), number=1)
+    return timeit.timeit(lambda: algorithm(text, pattern), number=10)
 
 # Пошук підрядка, який існує в тексті, та вимірювання часу виконання
 pattern1 = "дві монети по 10 копійок." # паттерн для першого текста
