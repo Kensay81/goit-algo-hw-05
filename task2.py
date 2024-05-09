@@ -24,20 +24,17 @@ def binary_search(arr, x):
             return (element_found, iterations, mid, arr[mid])
  
     # якщо елемент не знайдений
-    if (arr[mid] - arr[mid-1]) > (arr[mid+1] - arr[mid]):
-        nearest_element = arr[mid+1]
-        nearest_element_index = mid+1
-    elif (arr[mid] - arr[mid-1]) < (arr[mid+1] - arr[mid]):
-        nearest_element = arr[mid-1]
-        nearest_element_index = mid-1
+    if high < 0:
+        nearest_element_index = 0
+    elif low >= len(arr):
+        nearest_element_index = low - 1
     else:
-        nearest_element = (arr[mid-1], arr[mid+1])
-        nearest_element_index = (mid-1, mid+1) 
+        nearest_element_index = low
 
-    return (element_found, iterations, nearest_element_index, nearest_element)
+    return (element_found, iterations, nearest_element_index, arr[nearest_element_index])
 
 arr = [0.2, 0.3, 0.4, 1.0, 4.0]
-x = 0.3
+x = 0.35
 element_found, iterations, mid, element = binary_search(arr, x)
 if element_found:
     print(f"Element {element} is present at index {mid} , number of iterations was {iterations}")
